@@ -40,7 +40,7 @@ public class TileSpawner
 
     MapTile GetRandomTile(int x, int y)
     {
-        TileChecker tileChecker = new(mapTiles, mapSizeX, mapSizeY, mapTilePrefabs);
+        TileChecker tileChecker = new(mapTilePrefabs, mapTiles, mapSizeX, mapSizeY);
         List<MapTile> possibleTiles = tileChecker.CheckPossibleTiles(x, y);
 
         if (possibleTiles == null) return null;

@@ -7,9 +7,10 @@ public class TileChecker
     private readonly List<MapTile> mapTilePrefabs;
 
     public TileChecker(
+        List<MapTile> mapTilePrefabs,
         MapTile[,] mapTiles,
-        int mapSizeX, int mapSizeY,
-        List<MapTile> mapTilePrefabs)
+        int mapSizeX, int mapSizeY
+        )
     {
         this.mapTiles = mapTiles;
         this.mapSizeX = mapSizeX;
