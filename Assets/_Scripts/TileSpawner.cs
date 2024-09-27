@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class TileSpawner
 {
-    private readonly MapTile[,] mapTiles;
-    private readonly int mapSizeX, mapSizeY;
     private readonly List<MapTile> mapTilePrefabs;
+    private readonly MapTile[,] mapTiles;
     private readonly Transform transform;
-    private  float size;
+    private readonly int mapSizeX, mapSizeY;
+    private readonly int size;
+
     public TileSpawner(
-        Transform transform,
-        float size,
+        List<MapTile> mapTilePrefabs,
         MapTile[,] mapTiles,
+        Transform transform,
         int mapSizeX, int mapSizeY,
-        List<MapTile> mapTilePrefabs)
+        int size
+        )
     {
         this.mapTiles = mapTiles;
         this.mapSizeX = mapSizeX;
@@ -29,14 +31,14 @@ public class TileSpawner
 
         Vector3 pos = size * new Vector3(x, y, 0);
 
-        MapTile tile = CheckPossibleTiles(x, y);
+        MapTile tile = GetRandomTile(x, y);
 
         MapTile mapTile = Object.Instantiate(tile, pos, Quaternion.identity, transform);
         mapTiles[x, y] = mapTile;
         return true;
     }
 
-    MapTile CheckPossibleTiles(int x, int y)
+    MapTile GetRandomTile(int x, int y)
     {
         TileChecker tileChecker = new(mapTiles, mapSizeX, mapSizeY, mapTilePrefabs);
         List<MapTile> possibleTiles = tileChecker.CheckPossibleTiles(x, y);
