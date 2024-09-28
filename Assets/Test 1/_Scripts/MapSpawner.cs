@@ -15,4 +15,11 @@ public class MapSpawner : AMapSpawner
             }
         }
     }
+
+    protected override Vector2Int GetExitPosition()
+    {
+        int x = mapSO.mapSize.x - 1;
+        int y = mapSO.mapSize.y - 1;
+        return new Vector2Int(x, y);
+    }
 }

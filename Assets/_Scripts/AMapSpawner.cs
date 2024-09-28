@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public abstract class AMapSpawner : MonoBehaviour
 {
-
     [SerializeField] protected MapSO mapSO;
+    [SerializeField] Vector2Int playerStart = Vector2Int.zero;
+    [SerializeField] Vector2Int exitPos = Vector2Int.zero;
     protected MapTile[,] mapTiles;
     protected TileSpawner tileSpawner;
+
+    public static Action OnMapRegenerated;
+    void MapRegenerated() => OnMapRegenerated?.Invoke();
 
     void Start()
     {
@@ -27,7 +32,7 @@ public abstract class AMapSpawner : MonoBehaviour
 
         if (validPathExists)
         {
-            FunctionAfterValidPath();
+            MapRegenerated();
             yield break;
         }
 
@@ -47,19 +52,8 @@ public abstract class AMapSpawner : MonoBehaviour
         return pathFinder.IsPathToExit(playerStart, exitPos);
     }
 
-    protected virtual void FunctionAfterValidPath() { }
-
-    protected virtual Vector2Int GetPlayerPosition()
-    {
-        return new Vector2Int(0, 0);
-    }
-
-    protected virtual Vector2Int GetExitPosition()
-    {
-        int x = mapSO.mapSize.x - 1;
-        int y = mapSO.mapSize.y - 1;
-        return new Vector2Int(x, y);
-    }
+    protected virtual Vector2Int GetPlayerPosition() { return playerStart * 10; }
+    protected virtual Vector2Int GetExitPosition() { return exitPos * 10; }
 
     IEnumerator RegenerateMap()
     {

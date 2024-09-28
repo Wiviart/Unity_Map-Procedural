@@ -10,13 +10,9 @@ public class MapSpawner : AMapSpawner
 
     protected override void SpawnTiles()
     {
+        OnMapRegenerated += SpawnOtherTiles;
         var p = GetPlayerPosition();
         SpawnRecursive(p.x, p.y);
-    }
-
-    protected override void FunctionAfterValidPath()
-    {
-        SpawnOtherTiles();
     }
 
     protected override bool HasValidPath()

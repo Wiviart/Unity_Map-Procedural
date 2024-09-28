@@ -7,12 +7,8 @@ public class MapSpawner : AMapSpawner
 {
     protected override void SpawnTiles()
     {
+        OnMapRegenerated += SpawnOtherTiles;
         SpawnRecursive(0, 0);
-    }
-
-    protected override void FunctionAfterValidPath()
-    {
-        SpawnOtherTiles();
     }
 
     private void SpawnRecursive(int x, int y)
@@ -46,5 +42,12 @@ public class MapSpawner : AMapSpawner
                 tileSpawner.SpawnTile(x, y);
             }
         }
+    }
+
+    protected override Vector2Int GetExitPosition()
+    {
+        int x = mapSO.mapSize.x - 1;
+        int y = mapSO.mapSize.y - 1;
+        return new Vector2Int(x, y);
     }
 }

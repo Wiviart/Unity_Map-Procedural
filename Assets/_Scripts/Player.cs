@@ -3,10 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
-
     public float speed = 10f;
-    public float jumpForce = 10f;
-    bool isJumping = false;
 
     void Awake()
     {
@@ -17,7 +14,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-
     }
 
     void Move()

@@ -265,3 +265,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSO: {fileID: 11400000, guid: ac7c3480842fec241b0d0be9ae3793f9, type: 2}
+  playerStart: {x: 0, y: 0}
+  exitPos: {x: 9, y: 8}
