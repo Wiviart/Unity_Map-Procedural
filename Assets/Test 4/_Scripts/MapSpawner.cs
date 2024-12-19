@@ -1,7 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// Method 4: Create map when having player and exit transform
+// Use recursive method to spawn tiles from player position to exit position
+// Use another method to check if the map has a valid path
+// After create a valid path, spawn other tiles
 
 public class MapSpawner : AMapSpawner
 {
@@ -17,12 +19,14 @@ public class MapSpawner : AMapSpawner
 
     protected override bool HasValidPath()
     {
-        Vector2Int exitPos = GetExitPosition();
-        return mapTiles[exitPos.x, exitPos.y] != null;
+        // If exit position is not null, return true
+        var exitPos = GetExitPosition();
+        return mapTiles[exitPos.x, exitPos.y];
     }
 
     protected override Vector2Int GetPlayerPosition()
     {
+        // Get player position from player transform
         Vector2 p = playerTransform.position;
         int s = mapSO.tileSize;
         return PositionConverter.GetPoint(p, s);
@@ -30,6 +34,7 @@ public class MapSpawner : AMapSpawner
 
     protected override Vector2Int GetExitPosition()
     {
+        // Get exit position from exit transform
         Vector2 p = exitTransform.position;
         int s = mapSO.tileSize;
         return PositionConverter.GetPoint(p, s);
@@ -38,7 +43,7 @@ public class MapSpawner : AMapSpawner
     private void SpawnRecursive(int x, int y)
     {
         if (x < 0 || x >= mapSO.mapSize.x
-         || y < 0 || y >= mapSO.mapSize.y) return;
+                  || y < 0 || y >= mapSO.mapSize.y) return;
 
         if (mapTiles[x, y]) return;
 

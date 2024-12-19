@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class MapTile : MonoBehaviour
 {
-    [SerializeField] string code;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] private string code;
+    [SerializeField] private TextMeshProUGUI text;
 
-    void Start()
+    private void Start()
     {
         text.text = code;
     }

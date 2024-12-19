@@ -1,7 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// Method 2: Create map when having player and exit position
+// Use recursive method to spawn tiles from player position to exit position
+// After create a valid path, spawn other tiles
 
 public class MapSpawner : AMapSpawner
 {

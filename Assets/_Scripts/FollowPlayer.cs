@@ -1,22 +1,18 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    Player player;
+    private Player player;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(FindPlayer());
     }
 
     private IEnumerator FindPlayer()
     {
-        player = FindObjectOfType<Player>();
-
-        while (player == null)
+        while (!player)
         {
             player = FindObjectOfType<Player>();
             yield return null;
@@ -24,11 +20,11 @@ public class FollowPlayer : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
         if (!player) return;
 
-        Vector3 pos = player.transform.position;
+        var pos = player.transform.position;
         pos.z = -10;
         transform.position = pos;
     }

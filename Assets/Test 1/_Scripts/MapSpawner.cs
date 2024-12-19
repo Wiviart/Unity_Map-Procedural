@@ -1,7 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// Method 1: Create map when having player and exit position
+// If valid path doesn't exist, spawn a new map
 
 public class MapSpawner : AMapSpawner
 {

@@ -10,32 +10,34 @@ public abstract class AMapSpawner : MonoBehaviour
     protected MapTile[,] mapTiles;
     protected TileSpawner tileSpawner;
 
-    public static Action OnMapRegenerated;
-    void MapRegenerated() => OnMapRegenerated?.Invoke();
+    protected static Action OnMapRegenerated;
+    private void MapRegenerated() => OnMapRegenerated?.Invoke();
 
-    void Start()
+    private void Start()
     {
         mapTiles = new MapTile[mapSO.mapSize.x, mapSO.mapSize.y];
         tileSpawner = new TileSpawner(
             mapSO.mapTilePrefabs, mapTiles, transform,
             mapSO.mapSize.x, mapSO.mapSize.y, mapSO.tileSize);
 
-        SpawnTiles();
-        StartCoroutine(CheckValidPath());
+        SpawnTiles();                            // Spawn map tiles
+        StartCoroutine(CheckValidPath()); // Check if map is valid
     }
 
     protected abstract void SpawnTiles();
 
-    IEnumerator CheckValidPath()
+    private IEnumerator CheckValidPath()
     {
         bool validPathExists = HasValidPath();
 
+        // If map is valid, call action
         if (validPathExists)
         {
             MapRegenerated();
             yield break;
         }
 
+        // If map is invalid, regenerate map
         StartCoroutine(RegenerateMap());
         yield return new WaitForEndOfFrame();
         StartCoroutine(CheckValidPath());
@@ -43,10 +45,10 @@ public abstract class AMapSpawner : MonoBehaviour
 
     protected virtual bool HasValidPath()
     {
-        Vector2Int playerStart = GetPlayerPosition();
-        Vector2Int exitPos = GetExitPosition();
+        var playerStart = GetPlayerPosition();
+        var exitPos = GetExitPosition();
 
-        PathFinder pathFinder = new PathFinder(
+        var pathFinder = new PathFinder(
             mapTiles, mapSO.mapSize.x, mapSO.mapSize.y);
 
         return pathFinder.IsPathToExit(playerStart, exitPos);
@@ -55,7 +57,7 @@ public abstract class AMapSpawner : MonoBehaviour
     protected virtual Vector2Int GetPlayerPosition() { return playerStart * 10; }
     protected virtual Vector2Int GetExitPosition() { return exitPos * 10; }
 
-    IEnumerator RegenerateMap()
+    private IEnumerator RegenerateMap()
     {
         Debug.Log(gameObject.name + " regenerating map...");
         DestroyTiles();
@@ -63,7 +65,7 @@ public abstract class AMapSpawner : MonoBehaviour
         SpawnTiles();
     }
 
-    void DestroyTiles()
+    private void DestroyTiles()
     {
         for (int x = 0; x < mapSO.mapSize.x; x++)
         {

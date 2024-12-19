@@ -1,7 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// Method 3: Create map when having player and exit position
+// Use recursive method to spawn tiles from player position to exit position
+// Use another method to check if the map has a valid path
+// After create a valid path, spawn other tiles
 
 public class MapSpawner : AMapSpawner
 {
@@ -13,9 +15,9 @@ public class MapSpawner : AMapSpawner
 
     protected override bool HasValidPath()
     {
-        Vector2Int exitPos = GetExitPosition();
-
-        return mapTiles[exitPos.x, exitPos.y] != null;
+        // If exit position is not null, return true
+        var exitPos = GetExitPosition();
+        return mapTiles[exitPos.x, exitPos.y];
     }
 
     private void SpawnRecursive(int x, int y)
